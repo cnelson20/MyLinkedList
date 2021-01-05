@@ -1,23 +1,35 @@
 public class MyNode {
-  private int data;
+  private String data;
   private MyNode prev,next;
 
-  public MyNode(int data, MyNode prev, MyNode next) {
+  public MyNode(String data, MyNode next) {
     this.data = data;
     this.next = next;
   }
-  public MyNode(int data, MyNode prev, MyNode next) {
+  public MyNode(String data, MyNode prev, MyNode next) {
     this.data = data;
     this.prev = prev;
     this.next = next;
   }
-  public int data(){
+  public String getValue(){
     return this.data;
   }
-  public MyNode prev(){
+  public boolean setValue(String value){
+    this.data = value;
+    return true;
+  }
+  public MyNode getPrev(){
     return this.prev;
   }
-  public MyNode next(){
+  public MyNode getNext(){
     return this.next;
+  }
+  public boolean setNext(MyNode value) {
+    this.next = value;
+    return true;
+  }
+  public boolean setPrev(MyNode value) {
+    this.prev = value;
+    return true;
   }
 }
