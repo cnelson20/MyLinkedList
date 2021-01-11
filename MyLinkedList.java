@@ -102,13 +102,18 @@ public class MyLinkedList {
     return removed.getValue();
   }
   public void extend(MyLinkedList other) {
-    this.tail.setNext(other.head);
-    other.head.setPrev(this.tail);
-    this.tail = other.tail;
-    other.head = null;
-    other.tail = null;
+    if (length == 0) {
+      this.head = other.head;
+      this.tail = other.tail;
+    } else {
+      this.tail.setNext(other.head);
+      if (other.length > 0) {
+        other.head.setPrev(this.tail);
+        this.tail = other.tail;
+      }
+    }
     this.length += other.length;
-    other.length = 0;
+    other.clear();
   }
 
 }
