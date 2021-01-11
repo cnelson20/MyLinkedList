@@ -20,24 +20,28 @@ public class MyLinkedList {
     length++;
     return true;
   }
-  public boolean add(int index, String value) {
+  public void add(int index, String value) {
     if (length == 0) {
-      return add(value);
-    }
-    if (index == 0) {
+      add(value);
+      length--;
+    } else if (index < 0 || index > length) {
+      throw new IndexOutOfBoundsException();
+    } else if (index == 0) {
       head = new MyNode(value,null,head);
+      head.getNext().setPrev(head);
+    } else if (index == length) {
+      add(value);
+      length--;
     } else {
       MyNode pr = getNode(index - 1);
-      MyNode nxt = pr.getNext();
+      MyNode nxt = getNode(index);
       MyNode newNode = new MyNode(value,pr,nxt);
       pr.setNext(newNode);
       if (nxt != null) {
         nxt.setPrev(newNode);
       }
     }
-
     length++;
-    return true;
   }
   public String toString() {
     MyNode current = head;
@@ -46,6 +50,16 @@ public class MyLinkedList {
       if (current != head) {ret += ", ";}
       ret += current.getValue();
       current = current.getNext();
+    }
+    return ret + "]";
+  }
+  public String toStringReversed() {
+    MyNode current = tail;
+    String ret = "[";
+    while (current != null) {
+      if (current != tail) {ret += ", ";}
+      ret += current.getValue();
+      current = current.getPrev();
     }
     return ret + "]";
   }
@@ -61,7 +75,7 @@ public class MyLinkedList {
     current.setValue(str);
     return temp;
   }
-  public MyNode getNode(int index) {
+  private MyNode getNode(int index) {
     MyNode current = head;
     for (int i = 0; i < index; i++) {
       current = current.getNext();
@@ -73,6 +87,28 @@ public class MyLinkedList {
       throw new IndexOutOfBoundsException();
     }
     return getNode(index).getValue();
+  }
+  public String remove(int index) {
+    MyNode removed = getNode(index+1);
+    //System.out.println(removed.getValue());
+    MyNode pr = removed.getPrev();
+    //System.out.println(pr.getValue());
+    MyNode nxt = removed.getNext();
+    //System.out.println(nxt.getValue());
+    pr.setNext(nxt);
+    nxt.setPrev(pr);
+
+    length--;
+    return removed.getValue();
+  }
+  public void extend(MyLinkedList other) {
+    this.tail.setNext(other.head);
+    other.head.setPrev(this.tail);
+    this.tail = other.tail;
+    other.head = null;
+    other.tail = null;
+    this.length += other.length;
+    other.length = 0;
   }
 
 }

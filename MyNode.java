@@ -6,6 +6,11 @@ public class MyNode {
     this.data = data;
     this.next = next;
   }
+  public MyNode(String value) {
+    data = value;
+    this.next = null;
+    this.prev = null;
+  }
   public MyNode(String data, MyNode prev, MyNode next) {
     this.data = data;
     this.prev = prev;
